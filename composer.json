@@ -1,0 +1,10 @@
+{
+    "require": {
+        "monolog/monolog": "^2.0",
+        "predis/predis": "^2.2",
+        "laravel/ui": "^4.5"
+    },
+    "require-dev": {
+        "laravel/sail": "^1.28"
+    }
+}

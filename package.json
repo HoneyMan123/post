@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "sails-postgresql": "^5.0.1",
+    "vue": "^3.4.18"
+  }
+}
