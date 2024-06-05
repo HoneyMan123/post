@@ -87,20 +87,18 @@ return Inertia::render('Profile/profile');
 
     public function postSubmision(Request $request){
         //variables
-$lastAmountValue = DB::table('postAmount')->latest()->where('email', Auth::user()->email)->value('postAmount');
-        $userExistance = DB::table('postAmount')->where('email', Auth::user()->email)->exists();
-
+        $lastAmountValue = postAmount::latest()->where('email', Auth::user()->email)->value('postAmount');
+$userExistance = postAmount::where('email', Auth::user()->email)->exists();
         //scripts
         if($userExistance){
-            DB::table('postAmount')->where('email', Auth::user()->email)->increment('postAmount', 1);
-            $lastAmountValue = DB::table('postAmount')->latest()->where('email', Auth::user()->email)->value('postAmount');
-            DB::table('posts')->insert(['email'=> Auth::user()->email, 'postValue'=> $request->input('inputForm'), 'postAmount'=>$lastAmountValue, 'created_at'=>DB::raw('NOW()')]);
-
+            postAmount::where('email', Auth::user()->email)->increment('postAmount', 1);
+            $lastAmountValue = postAmount::latest()->where('email', Auth::user()->user)->value('postAmount');
+            posts::create(['email', Auth::user()->email, 'postValue' =>$request->input('inputForm'), 'postAmount' =>$lastAmountValue]);
         } else {
-            DB::table('postAmount')->insert(['email'=>Auth::user()->email]);
-            DB::table('postAmount')->where('email', Auth::user()->email)->increment('postAmount', 1);
-            DB::table('posts')->insert(['email'=> Auth::user()->email, 'postValue'=> $request->input('inputForm'), 'postAmount'=>$lastAmountValue, 'created_at'=>DB::raw('NOW()'), 'postAmount'=>1]);
-    }
+            postAmount::create(['email'=>Auth::user()->email]);
+            postAmount::where('email', Auth::user()->email)->increment('postAmount', 1);
+            posts::create(['email', Auth::user()->email, 'postValue'=>$request->input('inputForm'), 'created_at'=>DB::raw('Now()'), 'postValue'=> 1 ]);
+        }
 //$posts = new posts();
 return redirect()->to('profile');
 
